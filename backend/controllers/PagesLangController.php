@@ -62,16 +62,18 @@ class PagesLangController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($item_id)
     {
         $model = new PagesLang();
+        $model->item_id = $item_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/pages/view', 'id' => $model->item_id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'item_id' => $item_id
         ]);
     }
 
@@ -87,7 +89,7 @@ class PagesLangController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/pages/view', 'id' => $model->item_id]);
         }
 
         return $this->render('update', [
@@ -102,11 +104,11 @@ class PagesLangController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $item_id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pages/view', 'id' => $item_id]);
     }
 
     /**
@@ -118,10 +120,17 @@ class PagesLangController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = PagesLang::findOne($id)) !== null) {
-            return $model;
-        }
+        $query = PagesLang::find();
+        if(!empty($id)) $query->where(['id' => $id]);
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        $model = $query->one();
+
+        if ($model !== null) {
+
+            return $model;
+
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

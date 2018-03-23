@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%pages_lang}}".
@@ -46,7 +48,22 @@ class PagesLang extends \yii\db\ActiveRecord
         return [
             [['item_id', 'lang_id'], 'integer'],
             [['lang'], 'string', 'max' => 50],
-            [['title_1', 'text_1', 'title_2', 'text_2', 'title_3', 'text_3', 'title_4', 'text_4', 'title_5', 'text_5', 'title_6', 'text_6', 'title_7', 'text_7'], 'string', 'max' => 255],
+            [[
+                'title_1',
+                'title_2',
+                'title_3',
+                'title_4',
+                'title_5',
+                'title_6',
+                'title_7'], 'string', 'max' => 255],
+            [[
+                'text_1',
+                'text_2',
+                'text_3',
+                'text_4',
+                'text_5',
+                'text_6',
+                'text_7'], 'string'],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pages::className(), 'targetAttribute' => ['item_id' => 'id']],
         ];
     }
@@ -57,24 +74,25 @@ class PagesLang extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'item_id' => Yii::t('app', 'Item ID'),
-            'lang_id' => Yii::t('app', 'Lang ID'),
-            'lang' => Yii::t('app', 'Lang'),
-            'title_1' => Yii::t('app', 'Title 1'),
-            'text_1' => Yii::t('app', 'Text 1'),
-            'title_2' => Yii::t('app', 'Title 2'),
-            'text_2' => Yii::t('app', 'Text 2'),
-            'title_3' => Yii::t('app', 'Title 3'),
-            'text_3' => Yii::t('app', 'Text 3'),
-            'title_4' => Yii::t('app', 'Title 4'),
-            'text_4' => Yii::t('app', 'Text 4'),
-            'title_5' => Yii::t('app', 'Title 5'),
-            'text_5' => Yii::t('app', 'Text 5'),
-            'title_6' => Yii::t('app', 'Title 6'),
-            'text_6' => Yii::t('app', 'Text 6'),
-            'title_7' => Yii::t('app', 'Title 7'),
-            'text_7' => Yii::t('app', 'Text 7'),
+            'id' => 'ID',
+            'item_id' => 'Страница',
+            'lang_id' => 'ID языка',
+            'lang' => 'Язык',
+            'title_1' => 'Заголовок 1',
+            'text_1' => 'Текстовый блок 1',
+            'title_2' => 'Заголовок 2',
+            'text_2' => 'Текстовый блок 2',
+            'title_3' => 'Заголовок 3',
+            'text_3' => 'Текстовый блок 3',
+            'title_4' => 'Заголовок 4',
+            'text_4' => 'Текстовый блок 4',
+            'title_5' => 'Заголовок 5',
+            'text_5' => 'Текстовый блок 5',
+            'title_6' => 'Заголовок 6',
+            'text_6' => 'Текстовый блок 6',
+            'title_7' => 'Заголовок 7',
+            'text_7' => 'Текстовый блок 7',
+
         ];
     }
 
@@ -84,5 +102,34 @@ class PagesLang extends \yii\db\ActiveRecord
     public function getItem()
     {
         return $this->hasOne(Pages::className(), ['id' => 'item_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        $ret = parent::beforeSave($insert);
+
+        $lng = Lang::find()->where(['id' => $this->lang_id])->one();
+
+        if($this->isNewRecord) {
+            try {
+                if (empty($lng)) throw new Exception('Неверный язык');
+                $this->lang = $lng->local;
+            } catch (Exception $e) {
+                $ret = false;
+            }
+        }
+        return $ret;
+    }
+
+    public function getLangList($item_id){
+
+        return ArrayHelper::getColumn(self::find()->select('lang_id')->distinct('lang_id')->where(['item_id' => $item_id])->all(), 'lang_id');
+
+    }
+
+    public function getArray($item_id){
+
+
+        return ArrayHelper::map(Lang::find()->where(['NOT IN', 'id', $this->getLangList($item_id)])->all(), 'id', 'name');
     }
 }

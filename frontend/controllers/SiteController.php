@@ -5,7 +5,6 @@ use common\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -14,11 +13,13 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use HttpException;
+use common\models\Pages;
+use frontend\models\MailerForm;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends AppController
 {
     /**
      * {@inheritdoc}
@@ -74,7 +75,39 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $page = Pages::find()->where(['slug' => 'main'])->one();
+
+        if (!empty($page)) {
+            $name = $page->getSEO($page->id);
+
+            if (!empty($name)) {
+
+                $lang_name = $name->getDataItems();
+
+                $this->setMeta(
+                    $lang_name['title'],
+                    $lang_name['keywords'],
+                    $lang_name['description'],
+                    $lang_name['title'],
+                    $name->type,
+                    $name->img,
+                    $name->url,
+                    true,
+                    true,
+                    $lang_name['description'],
+                    $name->video,
+                    \Yii::$app->language,
+                    true,
+                    $name->localeAlternative,
+                    $name->GAuthor,
+                    $name->GPublisher,
+                    $name->app_id
+
+                );
+            }
+        }
+
+        return $this->render('index', compact('page'));
     }
 
     /**

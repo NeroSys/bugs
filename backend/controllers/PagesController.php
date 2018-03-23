@@ -8,6 +8,7 @@ use backend\models\PagesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Lang;
 
 /**
  * PagesController implements the CRUD actions for Pages model.
@@ -66,12 +67,15 @@ class PagesController extends Controller
     {
         $model = new Pages();
 
+        $langs = Lang::find()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'langs' => $langs
         ]);
     }
 
@@ -86,12 +90,15 @@ class PagesController extends Controller
     {
         $model = $this->findModel($id);
 
+        $langs = Lang::find()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'langs' => $langs
         ]);
     }
 
