@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Lang;
+use common\models\Contacts;
 
 /**
  * PagesController implements the CRUD actions for Pages model.
@@ -71,12 +72,9 @@ class PagesController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', compact('model', 'langs'));
         }
-
-        return $this->render('create', [
-            'model' => $model,
-            'langs' => $langs
-        ]);
     }
 
     /**
@@ -84,7 +82,6 @@ class PagesController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
@@ -94,14 +91,10 @@ class PagesController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', compact('model', 'langs'));
         }
-
-        return $this->render('update', [
-            'model' => $model,
-            'langs' => $langs
-        ]);
     }
-
     /**
      * Deletes an existing Pages model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -130,5 +123,40 @@ class PagesController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actions()
+    {
+        return [
+            'uploadPhoto' => [
+                'class' => 'common\components\cropper\actions\UploadAction',
+                'url' => 'http://injazz/upload/pages',
+                'path' => \Yii::getAlias('@frontend').'/web/upload/pages',
+            ]
+        ];
+    }
+
+    public function actionMain(){
+
+        $model = Pages::find()->where(['slug' => 'main'])->one();
+
+        return $this->render('main', compact('model'));
+    }
+
+    public function actionError(){
+
+        $model = Pages::find()->where(['slug' => 'error'])->one();
+
+        return $this->render('error', compact('model'));
+    }
+
+    public function actionContacts(){
+
+        $model = Pages::find()->where(['slug' => 'contacts'])->one();
+
+        $contacts = Contacts::find()->all();
+
+
+        return $this->render('contacts', compact('model', 'contacts'));
     }
 }

@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%lang}}".
@@ -48,8 +49,12 @@ class Lang extends \yii\db\ActiveRecord
     {
         return [
             [['url', 'local', 'name'], 'required'],
+            [['name'], 'unique'],
+            [['local'], 'unique'],
+            [['url'], 'unique'],
             [['default', 'date_update', 'date_create'], 'integer'],
             [['url', 'local', 'name', 'img'], 'string', 'max' => 255],
+            [['hostImage'], 'safe'],
         ];
     }
 
@@ -62,11 +67,11 @@ class Lang extends \yii\db\ActiveRecord
             'id' => 'ID',
             'url' => 'Url',
             'local' => 'Local',
-            'name' => 'Name',
-            'default' => 'Default',
-            'img' => 'Image',
-            'date_update' => 'Date Update',
-            'date_create' => 'Date Create',
+            'name' => 'Название',
+            'default' => 'Основной',
+            'img' => 'Лого',
+            'date_update' => 'Дата обновления',
+            'date_create' => 'Дата добавления',
         ];
     }
 
@@ -111,4 +116,30 @@ class Lang extends \yii\db\ActiveRecord
         }
     }
 
+    // image block--
+    public function getHostImage(){
+        return Url::toRoute('/../upload/lang/'.$this->img, true);
+    }
+
+    public function setHostImage($file){
+        $this->img = $file;
+    }
+
+    public function beforeSave($insert)
+    {
+        if(!empty($this->img)){
+            $tmp = explode('/', $this->img);
+            $this->img = array_pop($tmp);
+        }
+        return parent::beforeSave($insert);
+    }
+
+    public function getImage(){
+
+
+        return ($this->img) ?  '/frontend/web/upload/lang/'. $this->img : '/frontend/web/no-image.jpg';
+    }
+
+
+// end of image block --
 }

@@ -18,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Create Pages Lang'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -30,19 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'lang_id',
             'lang',
             'title_1',
-            //'text_1',
-            //'title_2',
-            //'text_2',
-            //'title_3',
-            //'text_3',
-            //'title_4',
-            //'text_4',
-            //'title_5',
-            //'text_5',
-            //'title_6',
-            //'text_6',
-            //'title_7',
-            //'text_7',
+            // 'text_1',
+            // 'title_2',
+            // 'text_2',
+            // 'title_3',
+            // 'text_3',
+            // 'title_4',
+            // 'text_4',
+            // 'title_5',
+            // 'text_5',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

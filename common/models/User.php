@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\helpers\Url;
 
 /**
  * User model
@@ -16,8 +17,8 @@ use yii\web\IdentityInterface;
  * @property string $lastName
  * @property string $img
  * @property string $address
- * @property int $phone_1
- * @property int $phone_2
+ * @property string $phone_1
+ * @property string $phone_2
  * @property int $isNew
  * @property int $moder
  * @property string $auth_key
@@ -32,6 +33,9 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    const STATUS_ALLOW = 0;
+    const STATUS_DISALLOW = 1;
 
 
     /**
@@ -60,11 +64,12 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['phone_1', 'phone_2', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'firstName', 'lastName', 'img', 'address', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['phone_1', 'phone_2', 'username', 'firstName', 'lastName', 'img', 'address', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['isNew', 'moder'], 'string', 'max' => 1],
             [['username'], 'unique'],
             [['email'], 'unique'],
+            [['hostImage'], 'safe'],
         ];
     }
 
@@ -229,5 +234,51 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByEmail($email)
     {
         return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    // image block--
+    public function getHostImage(){
+        return Url::toRoute('/../upload/user/'.$this->img, true);
+    }
+
+    public function setHostImage($file){
+        $this->img = $file;
+    }
+
+    public function beforeSave($insert)
+    {
+        if(!empty($this->img)){
+            $tmp = explode('/', $this->img);
+            $this->img = array_pop($tmp);
+        }
+        return parent::beforeSave($insert);
+    }
+
+    public function getImage(){
+
+
+        return ($this->img) ?  '/frontend/web/upload/user/'. $this->img : '/frontend/web/no-image.jpg';
+    }
+
+
+// end of image block --
+
+    public function isAllowed(){
+
+        return $this->moder;
+    }
+
+    public function  allow(){
+
+        $this->moder = self::STATUS_ALLOW;
+
+        return $this->save(false);
+    }
+
+    public function  disallow(){
+
+        $this->moder = self::STATUS_DISALLOW;
+
+        return $this->save(false);
     }
 }

@@ -1,53 +1,114 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: roman
+ * Date: 2/26/18
+ * Time: 7:02 PM
+ */
 
-/* @var $this yii\web\View */
+$this->title = 'Админ панель';
 
-$this->title = 'My Yii Application';
+use yii\helpers\Url;
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+<main id="main-container">
+    <!-- Page Header -->
+    <div class="bg-image overflow-hidden" style="background-image: url('/backend/web/img/animal.jpg');">
+        <div class="bg-black-op">
+            <div class="content content-narrow">
+                <div class="block block-transparent">
+                    <div class="block-content block-content-full">
+                        <h1 class="h1 font-w300 text-white animated fadeInDown push-50-t push-5">Панель управления</h1>
+                        <h2 class="h4 font-w300 text-white-op animated fadeInUp">Welcome <?=Yii::$app->user->identity->username?></h2>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
+    <!-- END Page Header -->
+
+    <!-- Page Content -->
+    <div class="content content-narrow">
+        <!-- Stats -->
+        <div class="row text-uppercase">
+            <div class="col-xs-6 col-sm-6">
+                <a class="block block-link-hover1" href="<?= Url::to(['courses/create']) ?>">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="pull-right push-15-t push-15">
+                            <i class="fa fa-plus fa-2x text-default-dark"></i>
+                        </div>
+                        <div class="text-muted">
+                            <small><i class="si si-note"></i> Добавить новый курс</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <a class="block block-link-hover1" href="<?= Url::to(['sliders/create']) ?>">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="pull-right push-15-t push-15">
+                            <i class="fa fa-plus fa-2x text-default-dark"></i>
+                        </div>
+                        <div class="text-muted">
+                            <small><i class="si si-note"></i> Добавить новый слайд</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <a class="block block-link-hover1" href="<?= Url::to(['messages/index']) ?>">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="pull-right push-15-t push-15">
+                            <i class="fa fa-commenting fa-2x text-default-dark"></i>
+                        </div>
+                        <div class="text-muted">
+                            <small><i class="si si-note"></i> <?if (!empty($messagesNew)){ echo count($messagesNew);}else{ echo  0;} ?> новых</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- END Stats -->
+
+        <!-- Top Products and Latest Orders -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Top Products -->
+                <div class="block block-opt-refresh-icon4">
+                    <div class="block-header bg-gray-lighter">
+                        <ul class="block-options">
+                            <li>
+                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title">Новые сообщения</h3>
+                    </div>
+                    <div class="block-content">
+                        <table class="table table-borderless table-striped table-vcenter">
+                            <tbody>
+                            <?php if (!empty($messagesNew)){?>
+                                <?php foreach ($messagesNew as $message) {?>
+                                    <tr>
+                                        <td class="text-center" style="width: 100px;">
+                                            <a href="<?= Url::toRoute(['messages/view', 'id' => $message->id])?>"><strong><?= $message->name ?></strong></a>
+                                        </td>
+                                        <td class="text-center" style="width: 100px;">
+                                            <a href="<?= Url::toRoute(['messages/view', 'id' => $message->id])?>"><strong><?= $message->message ?></strong></a>
+                                        </td>
+                                    </tr>
+                                <?}?>
+                            <?}else{?>
+                            <tr>
+                                <p>Новых сообщений нет</p>
+                            </tr>
+                            <?}?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END Top Products -->
+            </div>
+        </div>
+    </div>
+    <!-- END Page Content -->
+</main>

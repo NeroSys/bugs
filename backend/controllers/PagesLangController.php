@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Pages;
 use Yii;
 use common\models\PagesLang;
 use backend\models\PagesLangSearch;
@@ -15,7 +16,7 @@ use yii\filters\VerbFilter;
 class PagesLangController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -48,7 +49,6 @@ class PagesLangController extends Controller
      * Displays a single PagesLang model.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -65,16 +65,23 @@ class PagesLangController extends Controller
     public function actionCreate($item_id)
     {
         $model = new PagesLang();
+
         $model->item_id = $item_id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/pages/view', 'id' => $model->item_id]);
-        }
+        $page = Pages::find()->where(['id' => $item_id])->one();
 
-        return $this->render('create', [
-            'model' => $model,
-            'item_id' => $item_id
-        ]);
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+
+            return $this->redirect(['pages/'.$page->slug, 'id' => $model->item_id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'item_id' => $item_id
+            ]);
+        }
     }
 
     /**
@@ -82,19 +89,21 @@ class PagesLangController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/pages/view', 'id' => $model->item_id]);
-        }
+        $page = Pages::find()->where(['id' => $model->item_id])->one();
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['pages/'.$page->slug, 'id' => $model->item_id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -102,13 +111,14 @@ class PagesLangController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id, $item_id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/pages/view', 'id' => $item_id]);
+        $page = Pages::find()->where(['id' => $item_id])->one();
+
+        return $this->redirect(['/pages/'. $page->slug]);
     }
 
     /**
@@ -120,15 +130,8 @@ class PagesLangController extends Controller
      */
     protected function findModel($id)
     {
-        $query = PagesLang::find();
-        if(!empty($id)) $query->where(['id' => $id]);
-
-        $model = $query->one();
-
-        if ($model !== null) {
-
+        if (($model = PagesLang::findOne($id)) !== null) {
             return $model;
-
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

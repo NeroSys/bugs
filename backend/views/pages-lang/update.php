@@ -1,23 +1,46 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\PagesLang */
 
-$this->title = Yii::t('app', 'Обновить контент: ' . $model->id, [
-    'nameAttribute' => '' . $model->id,
+$this->title = Yii::t('app', 'Работа с контентом {modelClass}', [
+    'modelClass' => 'страницы',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('lang', 'Страницы'), 'url' => ['pages/index']];
-$this->params['breadcrumbs'][] = ['label' => $model->item->name, 'url' => ['pages/view', 'id' =>$model->item_id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Обновить');
+
+$page = \common\models\Pages::find()->where(['id' => $model->item_id])->one();
 ?>
-<div class="pages-lang-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<!-- Main Container -->
+<main id="main-container">
+    <!-- Hero Content -->
+    <section class="content content-boxed">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="block-header bg-gray-lighter">
+                    <div class="row items-push">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+                        <div class="col-sm-12 text-right hidden-xs">
+                            <ol class="breadcrumb push-10-t">
+                                <?php echo Breadcrumbs::widget(['links' => [
+                                    [
+                                        'template' => "<li><a class=\"link-effect\">{link}</a></li>\n",
+                                        'label' => Yii::t('app', 'Вернуться на титул страницы'), 'url' => ['pages/'.$page->slug]
+                                    ],
+                                    $this->title
+                                ]]); ?>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </section>
+</main>

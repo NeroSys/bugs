@@ -106,9 +106,9 @@ class Opengraf extends \yii\db\ActiveRecord
         return $data_lang;
     }
 
-    public function getDataitemsAdmin(){
+    public function getDataItemsAdmin(){
 
-        $language = 'ru-RU';
+        $language = 'ru';
         $data_lang = $this->getOpengrafLangs()->where(['lang'=>$language])->one();
         return $data_lang;
     }

@@ -42,10 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'text_4',
             'title_5',
             'text_5',
-            'title_6',
-            'text_6',
-            'title_7',
-            'text_7',
         ],
     ]) ?>
 

@@ -1,0 +1,16 @@
+
+
+@mixin addFont($font-family,$font-name,$font-weight: 400,$font-style: normal){
+  @font-face {
+    font-family: $font-family;
+    src:  url('../fonts/#{$font-name}.eot?#iefix') format('embedded-opentype'),
+          url('../fonts/#{$font-name}.woff') format('woff'),
+          url('../fonts/#{$font-name}.ttf')  format('truetype'),
+          url('../fonts/#{$font-name}.svg') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+}
+
+@include addFont(HelveticaNeueCyr,HelveticaNeueCyr-Thin,300);
+@include addFont(Lombok,Lombok);
