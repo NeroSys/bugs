@@ -45,6 +45,12 @@ use yii\helpers\Url;
                             <span class="sidebar-mini-hide">Сообщения</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<?= Url::to(['/contacts/index']) ?>">
+                            <i class="si si-phone"></i>
+                            <span class="sidebar-mini-hide">Контакты</span>
+                        </a>
+                    </li>
                     <li class="open">
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-list"></i><span class="sidebar-mini-hide">Страницы</span></a>
                         <ul>
@@ -53,11 +59,11 @@ use yii\helpers\Url;
                                     <span class="sidebar-nav-mini-hide">Главная</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="<?= Url::to(['/pages/contacts']) ?>">
-                                    <span class="sidebar-nav-mini-hide">Контакты</span>
-                                </a>
-                            </li>
+<!--                            <li>-->
+<!--                                <a href="--><?//= Url::to(['/pages/contacts']) ?><!--">-->
+<!--                                    <span class="sidebar-nav-mini-hide">Контакты</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
                             <li>
                                 <a href="<?= Url::to(['/pages/error']) ?>">
                                     <span class="sidebar-nav-mini-hide">404</span>

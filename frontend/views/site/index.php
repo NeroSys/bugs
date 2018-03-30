@@ -8,28 +8,28 @@ $this->title = 'Курсы программирования';
 <div class="wrapper">
     <div class="aside-header" id="nav-link-list">
         <a class="hash active" href="#first">
-            <div class="text-header-sector"><span>Главная</span></div>
+            <div class="text-header-sector"><span><?= Yii::t('front', 'Главная') ?></span></div>
             <div class="dot-header-sector">
                 <span class="expanding-circle"></span>
                 <span class="ie-fix-block"></span>
             </div>
         </a>
         <a class="hash" href="#second">
-            <div class="text-header-sector"><span>О нас</span></div>
+            <div class="text-header-sector"><span><?= Yii::t('front', 'О нас') ?></span></div>
             <div class="dot-header-sector">
                 <span class="expanding-circle"></span>
                 <span class="ie-fix-block"></span>
             </div>
         </a>
         <a class="hash" href="#third">
-            <div class="text-header-sector"><span>Курсы</span></div>
+            <div class="text-header-sector"><span><?= Yii::t('front', 'Курсы') ?></span></div>
             <div class="dot-header-sector">
                 <span class="expanding-circle"></span>
                 <span class="ie-fix-block"></span>
             </div>
         </a>
         <a class="hash" href="#forth">
-            <div class="text-header-sector"><span>Контакты</span></div>
+            <div class="text-header-sector"><span><?= Yii::t('front', 'Контакты') ?></span></div>
             <div class="dot-header-sector">
                 <span class="expanding-circle"></span>
                 <span class="ie-fix-block"></span>
@@ -39,9 +39,11 @@ $this->title = 'Курсы программирования';
     <div class="section main-slider-section" data-section="first">
         <div class="main-slider">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="/frontend/web/images/ss.png" alt=""></div>
-                <div class="swiper-slide"><img src="/frontend/web/images/main-slider-2.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="/frontend/web/images/main-slider-3.jpg" alt=""></div>
+                <?php if (!empty($sliders)) {?>
+                    <?php foreach ($sliders as $slider){?>
+                        <div class="swiper-slide"><img src="<?= $slider->getImage() ?>" alt="<?= $slider->name ?>"></div>
+                    <?}?>
+                <?}?>
             </div>
         </div>
         <div class="main-slider-mask">
@@ -54,9 +56,9 @@ $this->title = 'Курсы программирования';
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="slider-description">
-                            <h2>Научиться программировать</h2>
+                            <h2><?= Yii::t('front', 'Научиться программировать') ?></h2>
                             <span></span>
-                            <a href="#" data-toggle = "modal" data-target = "#myModal">ДА</a>
+                            <a href="#" data-toggle = "modal" data-target = "#myModal"><?= Yii::t('front', 'ДА') ?></a>
                         </div>
                     </div>
                 </div>
@@ -104,74 +106,32 @@ $this->title = 'Курсы программирования';
         <div class="section-content">
             <div class="video-bg">
                 <div class="video-holder">
-                    <img src="/frontend/web/images/bg-3.png">
+                    <img src="/frontend/web/images/333.png">
                 </div>
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <div class="news-block">
-                            <div class="news-img-sector">
-                                <img src="/frontend/web/images/news-1.png" alt="">
-                                <div class="triangle"></div>
-                            </div>
-                            <div class="news-text-sector">
-                                <div class="news-heading">
-                                    <h4>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать</h4>
-                                </div>
-                                <div class="news-text">
-                                    <p>Несколько абзацев более менее осмысленного текста рыбы на русском языке, а
-                                        начинающему оратору отточить навык публичных выступлений в домашних условиях.
-                                    </p>
-                                    <p>
-                                        Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <div class="news-block">
-                            <div class="news-img-sector">
-                                <img src="/frontend/web/images/news-2.png" alt="">
-                                <div class="triangle"></div>
-                            </div>
-                            <div class="news-text-sector">
-                                <div class="news-heading">
-                                    <h4>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать</h4>
-                                </div>
-                                <div class="news-text">
-                                    <p>Несколько абзацев более менее осмысленного текста рыбы на русском языке, а
-                                        начинающему оратору отточить навык публичных выступлений в домашних условиях.
-                                    </p>
-                                    <p>
-                                        Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему
-                                    </p>
+                    <?php if (!empty($courses)) {?>
+                        <?php foreach ($courses as $cours){?>
+                            <?php if (!empty($cours)) $lang_course = $cours->getDataitems() ?>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="news-block">
+                                    <div class="news-img-sector">
+                                        <img src="<?php if (!empty($cours->small_img)) echo $cours->getPreviewImg() ?>" alt="<?= $lang_course['name']?>">
+                                        <div class="triangle"></div>
+                                    </div>
+                                    <div class="news-text-sector">
+                                        <div class="news-heading">
+                                            <h4><?php if (!empty($lang_course['name'])) echo $lang_course->name ?></h4>
+                                        </div>
+                                        <div class="news-text">
+                                            <p><?php if (!empty($lang_course['description'])) echo $lang_course->description ?></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <div class="news-block">
-                            <div class="news-img-sector">
-                                <img src="/frontend/web/images/news-3.png" alt="">
-                                <div class="triangle"></div>
-                            </div>
-                            <div class="news-text-sector">
-                                <div class="news-heading">
-                                    <h4>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать</h4>
-                                </div>
-                                <div class="news-text">
-                                    <p>Несколько абзацев более менее осмысленного текста рыбы на русском языке, а
-                                        начинающему оратору отточить навык публичных выступлений в домашних условиях.
-                                    </p>
-                                    <p>
-                                        Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?}?>
+                    <?}?>
                 </div>
             </div>
         </div>
@@ -179,14 +139,15 @@ $this->title = 'Курсы программирования';
     <div class="section contacts-section"  data-section="forth">
         <div class="video-bg">
             <div class="video-holder">
-                <video src="/frontend/web/images/bg-video.mp4" autoplay loop></video>
-                <div class="video-mask"></div>
+                <img src="/frontend/web/images/Kodvards2.jpg" alt="">
+<!--                <video src="/frontend/web/images/bg-video.mp4" autoplay loop></video>-->
+<!--                <div class="video-mask"></div>-->
             </div>
         </div>
         <div class="container">
             <div class="row contacts-img-row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-ms-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
-                    <img src="/frontend/web/images/contacts.png" alt="">
+                    <img src="/frontend/web/images/it-language.jpg" alt="">
                 </div>
             </div>
             <div class="row contacts-row">
@@ -199,39 +160,47 @@ $this->title = 'Курсы программирования';
                 </div>
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     <div class="section-heading">
-                        <h3>Контакты</h3>
+                        <h3><?= Yii::t('front', 'Контакты')?></h3>
                     </div>
                 </div>
             </div>
+            <?php if (!empty($contacts)) {?>
+
             <div class="row">
+                <?php foreach ($contacts as $contact){?>
+                    <?php $lang_contact = $contact->getDataItems() ?>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="contact-block">
-                        <div class="contact-phone">+380939556220</div>
-                        <div class="contact-e-mail">zorin.egor@gmail.com</div>
+
+                        <div class="contact-phone"><h1><strong><?= $contact->phone_1 ?></strong></h1></div>
+                        <div class="contact-phone"><h1><strong><?= $contact->phone_2 ?></strong></h1></div>
+                        <div class="contact-e-mail"><h1><strong><?= $contact->mail ?></strong></h1></div>
+
                     </div>
                     <div class="contact-block">
                         <ul class="contact-links">
-                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+<!--                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>-->
+<!--                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>-->
+<!--                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>-->
                         </ul>
                     </div>
                     <div class="contact-block">
-                        <a href="#" class="download-presentation">
+
                             <div class="circle">
                                 <div class="dot"></div>
                             </div>
-                            <span>скачать презентацию</span>
-                        </a>
-                        <a href="#" class="download-gallery">
+                            <h2><?= $lang_contact['address'] ?></h2>
+
+
                             <div class="circle">
                                 <div class="dot"></div>
                             </div>
-                            <span>скачать галерею</span>
-                        </a>
+                            <h2><?= $lang_contact['name'] ?></h2>
                     </div>
                 </div>
+                <?}?>
             </div>
+            <?}?>
         </div>
     </div>
     <!--<div class="instagram-section">-->

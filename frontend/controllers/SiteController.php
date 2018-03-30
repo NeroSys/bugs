@@ -1,6 +1,9 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Contacts;
+use common\models\Courses;
+use common\models\Sliders;
 use common\models\User;
 use Yii;
 use yii\base\InvalidParamException;
@@ -107,7 +110,14 @@ class SiteController extends AppController
             }
         }
 
-        return $this->render('index', compact('page'));
+        $sliders = Sliders::find()->all();
+
+        $contacts = Contacts::find()->all();
+
+        $courses = Courses::find()->limit(3)->all();
+
+
+        return $this->render('index', compact('page', 'sliders', 'contacts', 'courses'));
     }
 
     /**
