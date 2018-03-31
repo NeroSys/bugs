@@ -118,6 +118,9 @@ class Pages extends \yii\db\ActiveRecord
                 'langText7',
                 'langText7New',
 
+                'hostImage', 
+                'mainImage'
+
             ], 'safe'],
             [['name', 'slug', 'url', 'main_img', 'small_img'], 'string', 'max' => 255],
         ];
@@ -306,6 +309,50 @@ class Pages extends \yii\db\ActiveRecord
     }
 // End Open Graph
 
+    // image block--
+    public function getMainImage(){
+        return Url::toRoute('/../upload/pages/'.$this->main_img, true);
+    }
 
+    public function getHostImage(){
+        return Url::toRoute('/../upload/pages/'.$this->small_img, true);
+    }
+
+    public function setHostImage($file){
+        $this->small_img = $file;
+    }
+
+    public function setMainImage($file){
+        $this->main_img = $file;
+    }
+
+    public function beforeSave($insert)
+    {
+        if(!empty($this->small_img)){
+            $tmp = explode('/', $this->small_img);
+            $this->small_img = array_pop($tmp);
+        }
+
+        if(!empty($this->main_img)){
+            $tmp = explode('/', $this->main_img);
+            $this->main_img = array_pop($tmp);
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    public function getPreviewImg(){
+
+
+        return ($this->small_img) ?  '/frontend/web/upload/pages/'. $this->small_img : '/frontend/web/no-image.jpg';
+    }
+
+    public function getMainImg(){
+
+
+        return ($this->main_img) ?  '/frontend/web/upload/pages/'. $this->main_img : '/frontend/web/no-image.jpg';
+    }
+
+// end of image block --
 
 }

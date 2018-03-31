@@ -13,7 +13,7 @@ return [
         ],
         'i18n' => [
             'class' => Zelenin\yii\modules\I18n\components\I18N::className(),
-            'languages' => ['uk-UK', 'ru-RU', 'en-EN'],
+            'languages' => ['ua', 'ru', 'en'],
             'translations' => [
                 'yii' => [
                     'class' => yii\i18n\DbMessageSource::className()

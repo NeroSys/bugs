@@ -119,7 +119,7 @@ $this->title = $model->name;
                                                     'name',
                                                     'slug',
                                                     [
-                                                        'attribute'=> 'ензу',
+                                                        'attribute'=> 'type',
                                                         'format' => 'html',
                                                         'value' => function($model){
                                                             return $model->visible ? '<span class="text-primary">Детский</span>' : '<span class="text-primary">Для взрослых</span>';

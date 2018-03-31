@@ -34,10 +34,14 @@ class Messages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['courses_id', 'phone', 'new', 'answered'], 'integer'],
+            [['name', 'mail', 'phone', 'message'], 'required'],
+            [['courses_id', 'new', 'answered'], 'integer'],
             [['date'], 'safe'],
             [['date'], 'date', 'format' => 'php:Y-m-d  H:i:s'],
-            [['name', 'mail', 'message'], 'string', 'max' => 255],
+            [['name', 'mail','phone', 'message'], 'string', 'max' => 255],
+
+
+
         ];
     }
 

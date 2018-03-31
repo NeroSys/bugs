@@ -17,7 +17,7 @@ $this->title = "Главная страница сайта";
 <main id="main-container">
     <!-- Hero Content -->
     <div class="bg-image" style="background-image: url(
-    <?php if (!empty($model->main_img)){ echo $model->getImage();}else{
+    <?php if (!empty($model->main_img)){ echo $model->getMainImage();}else{
         echo '/backend/web/img/noimage.png';
     } ?>
             );">
@@ -58,7 +58,24 @@ $this->title = "Главная страница сайта";
                 </div>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-3">
+                <!-- Side Content -->
+                <div class="js-nav-content visible-lg">
+                    <!-- Categories -->
+                    <div class="block">
+                        <div class="block-content">
+                            <ul>
+                                <li>
+                                    <?= Html::a(Yii::t('app', 'Обновить'), ['update', 'id' => $model->id], ['class' => 'btn btn-block btn-primary push-10']) ?>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END Categories -->
+                </div>
+                <!-- END Side Content -->
+            </div>
+            <div class="col-lg-9">
                 <!-- Product -->
                 <div class="block">
                     <div class="block-content">
@@ -69,6 +86,9 @@ $this->title = "Главная страница сайта";
                                     <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs">
                                         <li class="active">
                                             <a href="#ecom-product-info">Основная информация</a>
+                                        </li>
+                                        <li>
+                                            <a href="#ecom-product-images">Изображения</a>
                                         </li>
                                         <li>
                                             <a href="#ecom-product-comments">Переводы</a>
@@ -98,6 +118,31 @@ $this->title = "Главная страница сайта";
 
                                         </div>
 
+                                        <div class="tab-pane pull-r-l" id="ecom-product-images">
+                                            <?= DetailView::widget([
+                                                'model' => $model,
+                                                'attributes' => [
+                                                    [
+                                                        'attribute' => 'small_img',
+                                                        'format'=> 'html',
+                                                        'label' => 'Логотип',
+                                                        'value' => function($data){
+                                                            return Html::img($data->getHostImage(), ['width' => 180]);
+
+                                                        }
+                                                    ],
+                                                    [
+                                                        'attribute' => 'main_img',
+                                                        'format'=> 'html',
+                                                        'label' => 'Основное изображение',
+                                                        'value' => function($data){
+                                                            return Html::img($data->getMainImage(), ['width' => 180]);
+
+                                                        }
+                                                    ],
+                                                ],
+                                            ]) ?>
+                                        </div>
                                         <div class="tab-pane pull-r-l" id="ecom-product-comments">
 
                                             <?= GridView::widget([

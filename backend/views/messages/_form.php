@@ -37,17 +37,3 @@ use common\models\Courses;
     <?php ActiveForm::end(); ?>
 
 </div>
-
-<?//= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-<!---->
-<?//= $form->field($model, 'mail')->textInput(['maxlength' => true]) ?>
-<!---->
-<?//= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-<!---->
-<?//= $form->field($model, 'courses_id')->textInput(['maxlength' => true]) ?>
-<!---->
-<?//= $form->field($model, 'new')->textInput(['maxlength' => true]) ?>
-<!---->
-<?//= $form->field($model, 'answered')->textInput(['maxlength' => true]) ?>
-<!---->
-<?//= $form->field($model, 'message')->widget(CKEditor::className(), [

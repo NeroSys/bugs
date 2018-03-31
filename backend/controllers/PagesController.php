@@ -90,7 +90,7 @@ class PagesController extends Controller
         $langs = Lang::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([$model->slug]);
         } else {
             return $this->render('update', compact('model', 'langs'));
         }
@@ -125,17 +125,6 @@ class PagesController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    public function actions()
-    {
-        return [
-            'uploadPhoto' => [
-                'class' => 'common\components\cropper\actions\UploadAction',
-                'url' => 'http://injazz/upload/pages',
-                'path' => \Yii::getAlias('@frontend').'/web/upload/pages',
-            ]
-        ];
-    }
-
     public function actionMain(){
 
         $model = Pages::find()->where(['slug' => 'main'])->one();
@@ -159,4 +148,16 @@ class PagesController extends Controller
 
         return $this->render('contacts', compact('model', 'contacts'));
     }
+
+    public function actions()
+    {
+        return [
+            'uploadPhoto' => [
+                'class' => 'common\components\cropper\actions\UploadAction',
+                'url' => Yii::getAlias('@cropp').'/'.'pages',
+                'path' => \Yii::getAlias('@frontend').'/web/upload/pages',
+            ]
+        ];
+    }
+
 }

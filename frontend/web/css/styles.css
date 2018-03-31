@@ -365,7 +365,7 @@ body {
     opacity: 0; }
     .about-section .text-sector p {
       padding: 1.875em 0 1.5em;
-      font-size: 0.888em;
+      font-size: 1.3em;
       margin: 0;
       color: #4a4a4a; }
     .about-section .text-sector .section-link-btn {
@@ -686,7 +686,7 @@ body {
     .news-section .news-block:hover .news-img-sector {
       padding-bottom: 0; }
   .news-section .news-text-sector {
-    font-size: 0.777em;
+    font-size: 1.3em;
     padding: 2.5em 2em 2em;
     height: 22em;
     overflow: hidden;
@@ -967,7 +967,7 @@ body {
 .centered-row-text-sector {
   display: inline-block;
   vertical-align: middle;
-  font-size: 1rem;
+  font-size: 1.3rem;
   width: 36.84%; }
 
 .centered-row-img-sector {

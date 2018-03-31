@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Contacts;
 use common\models\Courses;
+use common\models\Messages;
 use common\models\Sliders;
 use common\models\User;
 use Yii;
@@ -186,6 +187,19 @@ class SiteController extends AppController
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionMessage()
+    {
+        $contacts = Contacts::find()->all();
+
+        $model = new Messages();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect('index');
+        }
+
+        return $this->render('message', compact('model', 'contacts'));
     }
 
     /**

@@ -83,19 +83,17 @@ use common\models\Lang;
                 <div class="col-md-12">
                     <div class="block">
                         <div class="block-content">
-                            <?= $form->field($model, 'title_1')->textInput(['maxlength' => true])->label('Перевод верхнего сообщения') ?>
+
+
+                            <?= $form->field($model, 'title_1')->textInput(['maxlength' => true])->label('Название') ?>
+
+                            <?= $form->field($model, 'title_2')->textInput(['maxlength' => true])->label('Ссылка на главную') ?>
 
                             <?= $form->field($model, 'text_1')->widget(CKEditor::className(), [
                                 'options' => [
                                     'row' => 4
                                 ],
-                            ])->label(Yii::t('app','2-й абзац сообщения'))?>
-
-                            <?= $form->field($model, 'text_2')->widget(CKEditor::className(), [
-                                'options' => [
-                                    'row' => 4
-                                ],
-                            ])->label(Yii::t('app','3-й абзац сообщения'))?>
+                            ])->label(Yii::t('app','Сообщение'))?>
 
                         </div>
                     </div>
@@ -141,7 +139,19 @@ use common\models\Lang;
                 <div class="col-md-12">
                     <div class="block">
                         <div class="block-content">
-                            <?= $form->field($model, 'title_1')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'title_1')->textInput(['maxlength' => true])->label('Название') ?>
+
+                            <?= $form->field($model, 'title_2')->textInput(['maxlength' => true])->label('Девиз на слайдере') ?>
+
+                            <?= $form->field($model, 'title_3')->textInput(['maxlength' => true])->label('О нас') ?>
+
+                            <?= $form->field($model, 'text_1')->widget(CKEditor::className(), [
+                                'options' => [
+                                    'row' => 4
+                                ],
+                            ])->label(Yii::t('app','Текст о нас'))?>
+
+                            <?= $form->field($model, 'title_4')->textInput(['maxlength' => true])->label('Курсы') ?>
                         </div>
                     </div>
                 </div>

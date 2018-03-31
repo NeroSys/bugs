@@ -20,7 +20,7 @@ $this->title = "404 ошибка";
 <main id="main-container">
     <!-- Hero Content -->
     <div class="bg-image" style="background-image: url(
-    <?php if (!empty($model->main_img)){ echo $model->getImage();}else{
+    <?php if (!empty($model->main_img)){ echo $model->getMainImage();}else{
         echo '/backend/web/img/noimage.png';
     } ?>
             );">

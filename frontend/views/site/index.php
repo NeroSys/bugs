@@ -1,8 +1,12 @@
 <?php
 
 use frontend\components\FBFWidget;
+use yii\helpers\Url;
+use frontend\widgets\LangWidget;
 
-$this->title = 'Курсы программирования';
+$lang_page = $page->getdataItems();
+
+$this->title = $lang_page['title_1'];
 ?>
 <?//= FBFWidget::widget([]) ?>
 <div class="wrapper">
@@ -56,9 +60,9 @@ $this->title = 'Курсы программирования';
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="slider-description">
-                            <h2><?= Yii::t('front', 'Научиться программировать') ?></h2>
+                            <h2><?= $lang_page['title_2'] ?></h2>
                             <span></span>
-                            <a href="#" data-toggle = "modal" data-target = "#myModal"><?= Yii::t('front', 'ДА') ?></a>
+                            <a href="<?= Url::to(['site/message']) ?>"><?= Yii::t('front', 'ДА') ?></a>
                         </div>
                     </div>
                 </div>
@@ -73,24 +77,22 @@ $this->title = 'Курсы программирования';
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="text-sector">
                         <div class="h-type-a">
-                            <h3>О нас</h3>
+                            <h3><?= $lang_page['title_3'] ?></h3>
                         </div>
-                        <p>Мне повезло заниматься тем, что нравится, тем, что вдохновляет достигать новых успехов, когда не хочется спать, есть, пить, а только лишь двигаться вперед.
-                            Сделать людей добрее - основная цель и миссия.
-                            Для меня ведение мероприятия - это не просто разговор в микрофон - это эмоция, драйв, удовольствие, содержание.</p>
-                        <a href="#" class="section-link-btn">Подробнее</a>
+                        <p><?= $lang_page['text_1'] ?></p>
+
                     </div>
                     <div class="img-sector">
-                        <img src="/frontend/web/images/about-1.png" alt="">
+                        <img src="<?= $page->getHostImage() ?>" alt="<?= $lang_page['title_2'] ?>">
                     </div>
                 </div>
             </div>
         </div>
         <div class="sliding-img">
-            <img src="/frontend/web/images/about-2.png" alt="">
+            <img src="<?= $page->getMainImage() ?>" alt="<?= $lang_page['title_2'] ?>">
         </div>
         <div class="about-logo">
-            <img src="/frontend/web/images/zorin.svg" alt="">
+            <img src="/frontend/web/images/1.jpg" alt="">
         </div>
     </div>
     <div class="section news-section" data-section="third">
@@ -98,7 +100,7 @@ $this->title = 'Курсы программирования';
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="section-heading">
-                        <h3>Курсы</h3>
+                        <h3><?= $lang_page['title_4'] ?></h3>
                     </div>
                 </div>
             </div>
@@ -179,9 +181,7 @@ $this->title = 'Курсы программирования';
                     </div>
                     <div class="contact-block">
                         <ul class="contact-links">
-<!--                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>-->
-<!--                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>-->
-<!--                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>-->
+                            <?= LangWidget::widget() ?>
                         </ul>
                     </div>
                     <div class="contact-block">
